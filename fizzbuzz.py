@@ -5,7 +5,7 @@ import tensorflow as tf
 
 class FizzBuzzModel:
     def __init__(self, learn_rate=0.1, num_digits=12, num_hidden=100,
-                       num_epochs=10000, batch_size=128, verbose=True):
+                       num_epochs=20000, batch_size=128, verbose=True):
         self.learn_rate = learn_rate
         self.num_digits = num_digits
         self.num_hidden = num_hidden
@@ -41,6 +41,10 @@ class FizzBuzzModel:
         return tf.Variable(tf.random_normal(shape, stddev=0.01))
 
     @staticmethod
+    def init_bias(shape):
+        return tf.Variable(tf.constant(0.001, shape=shape))
+
+    @staticmethod
     def model(data, weights_h, bias_h, weights_o, bias_o):
         hidden = tf.nn.relu6(tf.matmul(data, weights_h) + bias_h)
         return tf.matmul(hidden, weights_o) + bias_o
@@ -58,9 +62,9 @@ class FizzBuzzModel:
         labels = tf.placeholder("float", [None, 4])
 
         weights_h = self.init_weights([self.num_digits, self.num_hidden])
-        bias_h = self.init_weights([self.num_hidden])
+        bias_h = self.init_bias([self.num_hidden])
         weights_o = self.init_weights([self.num_hidden, 4])
-        bias_o = self.init_weights([4])
+        bias_o = self.init_bias([4])
 
         logits = self.model(data, weights_h, bias_h, weights_o, bias_o)
 
