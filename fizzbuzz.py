@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 class FizzBuzzModel:
-    def __init__(self, learn_rate=0.1, num_digits=10, num_hidden=100,
+    def __init__(self, learn_rate=0.1, num_digits=12, num_hidden=100,
                        num_epochs=10000, batch_size=128, verbose=True):
         self.learn_rate = learn_rate
         self.num_digits = num_digits
@@ -19,14 +19,22 @@ class FizzBuzzModel:
 
     @staticmethod
     def fizz_buzz_encode(i):
-        if i % 15 == 0:
-            return np.array([0, 1, 1])
+        if i % 105 == 0:
+            return np.array([0, 1, 1, 1])
+        if i % 35 == 0:
+            return np.array([0, 0, 1, 1])
+        elif i % 21 == 0:
+            return np.array([0, 1, 0, 1])
+        elif i % 15 == 0:
+            return np.array([0, 1, 1, 0])
+        elif i % 7 == 0:
+            return np.array([0, 0, 0, 1])
         elif i % 5 == 0:
-            return np.array([0, 0, 1])
+            return np.array([0, 0, 1, 0])
         elif i % 3 == 0:
-            return np.array([0, 1, 0])
+            return np.array([0, 1, 0, 0])
         else:
-            return np.array([1, 0, 0])
+            return np.array([1, 0, 0, 0])
 
     @staticmethod
     def init_weights(shape):
@@ -39,20 +47,20 @@ class FizzBuzzModel:
 
     @staticmethod
     def fizz_buzz(i, prediction):
-        return ''.join(np.where(prediction, [str(i), "fizz", "buzz"], ['', '', '']))
+        return ''.join(np.where(prediction, [str(i), "fizz", "buzz", "pop"], ['', '', '', '']))
 
     def solve(self):
-        train_range = range(101, 2 ** self.num_digits)
+        train_range = range(201, 2 ** self.num_digits)
         train_data = np.array([self.binary_encode(i, self.num_digits) for i in train_range])
         train_labels = np.array([self.fizz_buzz_encode(i) for i in train_range])
 
         data = tf.placeholder("float", [None, self.num_digits])
-        labels = tf.placeholder("float", [None, 3])
+        labels = tf.placeholder("float", [None, 4])
 
         weights_h = self.init_weights([self.num_digits, self.num_hidden])
         bias_h = self.init_weights([self.num_hidden])
-        weights_o = self.init_weights([self.num_hidden, 3])
-        bias_o = self.init_weights([3])
+        weights_o = self.init_weights([self.num_hidden, 4])
+        bias_o = self.init_weights([4])
 
         logits = self.model(data, weights_h, bias_h, weights_o, bias_o)
 
@@ -76,7 +84,7 @@ class FizzBuzzModel:
                     print(epoch, np.mean(train_labels ==
                                          sess.run(predict_operation, feed_dict={data: train_data, labels: train_labels})))
 
-            numbers = np.arange(1, 101)
+            numbers = np.arange(1, 201)
             test_data = np.transpose(self.binary_encode(numbers, self.num_digits))
             test_labels = sess.run(predict_operation, feed_dict={data: test_data})
 
