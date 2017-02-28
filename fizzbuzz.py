@@ -6,7 +6,7 @@ np.set_printoptions(threshold='nan')
 
 class FizzBuzzModel:
     def __init__(self, learn_rate=0.1, num_digits=12, num_hidden=100,
-                       num_epochs=20000, batch_size=128, verbose=True):
+                       num_epochs=15000, batch_size=128, verbose=True):
         self.learn_rate = learn_rate
         self.num_digits = num_digits
         self.num_hidden = num_hidden
