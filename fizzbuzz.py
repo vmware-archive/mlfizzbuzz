@@ -85,7 +85,7 @@ class FizzBuzzModel:
                     sess.run(train_operation, feed_dict={data: train_data[start:end], labels: train_labels[start:end]})
 
                 if self.verbose and not epoch % 100:
-                    print(epoch, np.mean(train_labels ==
+                    print("Epoch:", epoch, "Accuracy:", np.mean(train_labels ==
                                          sess.run(predict_operation, feed_dict={data: train_data, labels: train_labels})))
 
             numbers = np.arange(1, 201)
