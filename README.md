@@ -26,3 +26,7 @@ What happens if...
  *  you change the `batch_size`?
  *  you change the optimisation method?
  *  you increase the complexity of the model by adding more or different layers in?
+
+## Compile Tensorflow manually to get better speed on CPU
+* [Here's how to build Tensorflow from source on a Mac](https://www.tensorflow.org/install/install_sources)
+* Use `bazel build -c opt --copt=-mavx --copt=-msse4.2 --copt=-msse4.1 --copt=-msse3 --copt=-mavx2 --copt=-mfma -k //tensorflow/tools/pip_package:build_pip_package` when building with bazel to get all the advanced CPU instructions
