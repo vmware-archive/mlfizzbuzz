@@ -2,6 +2,7 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 
+np.set_printoptions(threshold='nan')
 
 class FizzBuzzModel:
     def __init__(self, learn_rate=0.1, num_digits=12, num_hidden=100,
@@ -56,7 +57,9 @@ class FizzBuzzModel:
     def solve(self):
         train_range = range(201, 2 ** self.num_digits)
         train_data = np.array([self.binary_encode(i, self.num_digits) for i in train_range])
+        print("IN: ", train_data)
         train_labels = np.array([self.fizz_buzz_encode(i) for i in train_range])
+        print("OUT: ", train_labels)
 
         data = tf.placeholder("float", [None, self.num_digits])
         labels = tf.placeholder("float", [None, 4])
