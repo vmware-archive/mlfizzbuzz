@@ -10,6 +10,7 @@ Heavily borrowed from [Fizz Buzz Tensorflow](https://github.com/joelgrus/fizz-bu
 "enhanced" with some integration testing, multiclass prediction and the second fizz buzz feature "pop".
 
 ## How to run
+* Clone the repo: `git clone https://github.com/pivotal/mlfizzbuzz.git`
 * Install python 2.7.x: on OSX `brew install python`, on Linux `apt-get python-dev`
 * Install virtualenv: `pip install virtualenv`
 * Create a virtualenv in the repo root folder with the python 2.7 runtime: `virtualenv --python=python2.7 .`
